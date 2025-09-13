@@ -1,0 +1,12 @@
+com.example.test_kotlin
+ ├─ data/
+ │   ├─ model/LoginDTO.kt        (Data Transfer Object)
+ │   ├─ api/AuthApi.kt           (API Interface)
+ │   ├─ api/ApiClient.kt         (Retrofit builder)
+ │   ├─ repository/AuthRepository.kt (Abstraction)
+ │   └─ repository/AuthRepositoryImpl.kt (Implementation)
+ ├─ domain/
+ │   └─ usecase/LoginUseCase.kt  (Business Logic)
+ ├─ presentation/
+ │   └─ LoginViewModel.kt        (UI Logic)
+ └─ utils/Logger.kt              (Logging Helper)
