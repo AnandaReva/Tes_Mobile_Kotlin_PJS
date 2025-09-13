@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.test_kotlin.logger.Logger
+import com.example.test_kotlin.core.logger.Logger
 import com.example.test_kotlin.viewmodel.UserUiState
 import com.example.test_kotlin.viewmodel.UserViewModel
 import org.koin.androidx.compose.koinViewModel

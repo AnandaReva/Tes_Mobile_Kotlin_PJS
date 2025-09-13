@@ -2,7 +2,7 @@ package com.example.test_kotlin.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.test_kotlin.logger.Logger
+import com.example.test_kotlin.core.logger.Logger
 import com.example.test_kotlin.model.User
 import com.example.test_kotlin.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow

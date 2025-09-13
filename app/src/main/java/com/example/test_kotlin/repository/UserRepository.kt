@@ -3,7 +3,7 @@ package com.example.test_kotlin.repository
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.test_kotlin.api.ApiService
-import com.example.test_kotlin.logger.Logger
+import com.example.test_kotlin.core.logger.Logger
 import com.example.test_kotlin.model.User
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -29,7 +29,6 @@ class UserRepository(private val api: ApiService) {
             if (response.users.isNotEmpty()) {
                 Logger.debug(className, "$methodName - User pertama: ${response.users.first().toString().take(100)}...")
             }
-
             Result.success(response.users)  // Kembalikan list users dari UserResponse
 
         } catch (e: Exception) {

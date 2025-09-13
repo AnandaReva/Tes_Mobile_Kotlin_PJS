@@ -1,4 +1,4 @@
-package com.example.test_kotlin.logger
+package com.example.test_kotlin.core.logger
 
 import android.os.Build
 import androidx.annotation.RequiresApi

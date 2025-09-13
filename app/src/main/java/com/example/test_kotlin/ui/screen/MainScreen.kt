@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.example.test_kotlin.logger.Logger
+import com.example.test_kotlin.core.logger.Logger
 import com.example.test_kotlin.model.User
 import com.example.test_kotlin.viewmodel.UserUiState
 import com.example.test_kotlin.viewmodel.UserViewModel
