@@ -55,19 +55,25 @@ fun MainScreen(
     }
 }
 
-// ================= USER LIST SCREEN DENGAN SEARCH BAR + LOGGING =======================
+// ================= USER LIST SCREEN DENGAN SEARCH BAR + SORT + LOGGING =======================
 @Composable
 @RequiresApi(Build.VERSION_CODES.O)
 fun UserListScreen(users: List<User>, onUserClick: (User) -> Unit) {
     var searchQuery by remember { mutableStateOf("") }
+    var sortAsc by remember { mutableStateOf(true) } // true = ascending, false = descending
 
     // Logging perubahan query
     LaunchedEffect(searchQuery) {
         Logger.debug("UserListScreen", "Search query changed to: '$searchQuery'")
     }
 
-    // 🔍 Filter user berdasarkan nama depan atau belakang
-    val filteredUsers = remember(searchQuery, users) {
+    // Logging perubahan sort order
+    LaunchedEffect(sortAsc) {
+        Logger.debug("UserListScreen", "Sort order changed to: ${if (sortAsc) "Ascending" else "Descending"}")
+    }
+
+    // Filter dan sort users
+    val filteredSortedUsers = remember(searchQuery, users, sortAsc) {
         val filtered = if (searchQuery.isBlank()) {
             users
         } else {
@@ -82,10 +88,38 @@ fun UserListScreen(users: List<User>, onUserClick: (User) -> Unit) {
             "Filtering users with query '$searchQuery'. Result count: ${filtered.size}"
         )
 
-        filtered
+        val sorted = if (sortAsc) {
+            filtered.sortedBy { it.firstName.lowercase() }
+        } else {
+            filtered.sortedByDescending { it.firstName.lowercase() }
+        }
+
+        Logger.debug(
+            "UserListScreen",
+            "Sorted users by firstName ${if (sortAsc) "ascending" else "descending"}"
+        )
+
+        sorted
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
+
+        // Row untuk tombol Sort
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp, vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End
+        ) {
+            Text(text = "Sort: ", style = MaterialTheme.typography.bodyMedium)
+            Button(
+                onClick = { sortAsc = !sortAsc },
+                modifier = Modifier.height(36.dp)
+            ) {
+                Text(text = if (sortAsc) "Ascending" else "Descending")
+            }
+        }
 
         // Search Bar
         OutlinedTextField(
@@ -95,12 +129,14 @@ fun UserListScreen(users: List<User>, onUserClick: (User) -> Unit) {
             leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(horizontal = 8.dp)
         )
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         // List of Users
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(filteredUsers) { user ->
+            items(filteredSortedUsers) { user ->
                 UserItem(user = user) {
                     Logger.debug("UserListScreen", "User item clicked: ${user.firstName} ${user.lastName}")
                     onUserClick(user)
